@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'home.dart';
 
 var currDt = DateTime.now();
 
@@ -23,7 +24,7 @@ class Home1 extends StatefulWidget {
 class _HomeState extends State<Home1> {
   int _index = 0;
   final List<Widget> _children = [
-    //Home(),
+    Home(),
     //Emergency(),
     //Profile(),
   ];
