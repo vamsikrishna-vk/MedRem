@@ -75,45 +75,23 @@ class _LoginState extends State<Login> {
 //                                ))
                         ),
 
-                        SizedBox(height: 22.0),
-                        SizedBox(
-                            height: 50.0,
-                            child: Row(
-                              children: [
-                                Icon(Icons.date_range),
-                                TextFormField(
-                                    decoration: InputDecoration(
-                                      border: const OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      hintText: 'DATE\ndd-mm-yy',
-                                      filled: true,
-                                      fillColor: new Color.fromRGBO(0, 0, 0, 240.0),
-                                      contentPadding: const EdgeInsets.only(
-                                          left: 14.0, bottom: 8.0, top: 8.0),
-                                    )),
-                              ],
-                            )),
+
                         SizedBox(height: 22.0),
                         SizedBox(
                           height: 50.0,
                           child: Row(
-                            children: [
-                              Icon(Icons.timer),
-                              TextFormField(
-                                  controller: passwordController,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    border: const OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: 'TIME',
-                                    filled: true,
-                                    fillColor: new Color.fromRGBO(0, 0, 0, 240.0),
-                                    contentPadding: const EdgeInsets.only(
-                                        left: 14.0, bottom: 8.0, top: 8.0),
-                                  )),
-                            ],
+                            children:  [
+                              Icon(Icons.person),
+                          DropdownButton<String>(
+                            items: <String>['report 1', 'report 2', 'report 3', 'report4'].map((String value) {
+                              return new DropdownMenuItem<String>(
+                                value: value,
+                                child: new Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (_) {},
+                          ),
+                          ],
                           ),
                         ),
 
@@ -138,12 +116,7 @@ class _LoginState extends State<Login> {
                               MaterialPageRoute(builder: (context) => signup()),
                             );
                           },
-                          child: new Text(
-                            "New User? Signup",
-                            style: TextStyle(
-                              color: Color(0xFF6200EE),
-                            ),
-                          ),
+                          child:
                         )
                       ],
                     )),
