@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:provider/provider.dart';
 import 'authentication_service.dart';
 
@@ -21,7 +20,7 @@ class _LoginState extends State<Login> {
         home: Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF6200EE),
-        title: Text("LIFE CARE HOSPITALS"),
+        title: Text("MEDREM"),
         centerTitle: true,
       ),
       body: Container(
@@ -94,10 +93,7 @@ class _LoginState extends State<Login> {
                 SizedBox(height: 22.0),
                 //Text('New User? Signup'),
                 new GestureDetector(
-                  onTap: () {
-
-
-                  },
+                  onTap: () {},
                   child: new Text(
                     "New User? Signup",
                     style: TextStyle(
