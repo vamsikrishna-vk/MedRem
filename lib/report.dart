@@ -81,7 +81,7 @@ class _LoginState extends State<Login> {
                           height: 50.0,
                           child: Row(
                             children:  [
-                              Icon(Icons.person),
+                              Icon(Icons.library_books),
                           DropdownButton<String>(
                             items: <String>['report 1', 'report 2', 'report 3', 'report4'].map((String value) {
                               return new DropdownMenuItem<String>(
