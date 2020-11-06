@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class Reports extends StatefulWidget {
 
 class _ReportState extends State<Reports> {
   String _value, _value1;
-  var docname, docname1;
+  var docname, availablereports, availablereports1;
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
   List<DropdownMenuItem<String>> menuItems = List();
@@ -39,21 +40,21 @@ class _ReportState extends State<Reports> {
                 default:
                   int k = snapshot.data["medications"]["0"];
                   print(k);
+                  availablereports = new List(k + 1);
+                  availablereports1 = new List(k + 1);
                   docname = new Map();
                   for (int i = 1; i <= k; i++) {
                     docname[i.toString()] =
                         snapshot.data["medications"][i.toString()]["doc name"];
+                    availablereports[i] = snapshot.data["medications"]
+                        [i.toString()]["reports"]["1"]["name"];
+                    availablereports1[i] = snapshot.data["medications"]
+                        [i.toString()]["reports"]["1"]["report"];
+                  }
 
-                  }
-                  docname1 = ["happy", "birthday", "to", "you"];
                   print(docname);
-                  for (String key in docname.keys) {
-                    menuItems.add(DropdownMenuItem<String>(
-                      // items[key] this instruction get the value of the respective key
-                      child: Text(docname[key]), // the value as text label
-                      value: key, // the respective key as value
-                    ));
-                  }
+                  print(availablereports);
+
                   return Container(
                       padding: EdgeInsets.all(20.0),
                       //color: Colors.white,
@@ -75,7 +76,6 @@ class _ReportState extends State<Reports> {
                             ),
                           ),
                           SizedBox(height: 22.0),
-
                           Container(
                               height: 50.0,
                               decoration: BoxDecoration(
@@ -99,7 +99,14 @@ class _ReportState extends State<Reports> {
                                           "From Doctor",
                                         ),
                                       ),
-                                      items: menuItems,
+                                      items: <String>[
+                                        docname['1'],
+                                      ].map((String value) {
+                                        return new DropdownMenuItem<String>(
+                                          value: value,
+                                          child: new Center(child: Text(value)),
+                                        );
+                                      }).toList(),
                                       onChanged: (newValue1) {
                                         setState(() {
                                           _value1 = newValue1;
@@ -129,12 +136,8 @@ class _ReportState extends State<Reports> {
                                       value: _value,
                                       hint: Center(
                                           child: Text("select a report")),
-                                      items: <String>[
-                                        'report 1',
-                                        'report 2',
-                                        'report 3',
-                                        'report4'
-                                      ].map((String value) {
+                                      items: <String>[availablereports[1]]
+                                          .map((String value) {
                                         return new DropdownMenuItem<String>(
                                           value: value,
                                           child: new Center(child: Text(value)),
@@ -149,16 +152,17 @@ class _ReportState extends State<Reports> {
                               ],
                             ),
                           ),
-
                           SizedBox(height: 22.0),
                           RaisedButton(
                             textColor: Colors.white,
                             color: Color(0xFF6200EE),
-                            onPressed: () {},
+                            onPressed: () {
+                              launch(availablereports1[1]);
+                              //_launchURL();
+                            },
                             child: Text('Download'),
                           ),
                           SizedBox(height: 22.0),
-                          //Text('New User? Signup'),
                         ],
                       ));
               }
@@ -171,5 +175,14 @@ class _ReportState extends State<Reports> {
         ),
       ),
     ));
+  }
+
+  _launchURL() async {
+    const url = 'https://flutter.io';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
