@@ -45,7 +45,7 @@ class _ReportState extends State<Reports> {
                   availablereports1 = new Map();
                   docname = new Map();
 
-                  for (int i = 1; i <= 3; i++) {
+                  for (int i = 1; i <= k; i++) {
                     docname[i.toString()] =
                         snapshot.data["medications"][i.toString()]["doc name"];
                     availablereports[i] = snapshot.data["medications"]
@@ -105,7 +105,6 @@ class _ReportState extends State<Reports> {
                                       items: <String>[
                                         docname['1'],
                                         docname['2'],
-                                        docname['3'],
                                       ].map((String value) {
                                         return new DropdownMenuItem<String>(
                                           value: value,
@@ -144,7 +143,6 @@ class _ReportState extends State<Reports> {
                                       items: <String>[
                                         availablereports[1],
                                         availablereports[2],
-                                        availablereports[3]
                                       ].map((String value) {
                                         return new DropdownMenuItem<String>(
                                           value: value,
