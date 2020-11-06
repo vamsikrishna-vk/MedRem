@@ -18,6 +18,7 @@ class _ReportState extends State<Reports> {
   var docname, docname1;
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
+  List<DropdownMenuItem<String>> menuItems = List();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,9 +43,17 @@ class _ReportState extends State<Reports> {
                   for (int i = 1; i <= k; i++) {
                     docname[i.toString()] =
                         snapshot.data["medications"][i.toString()]["doc name"];
+
                   }
                   docname1 = ["happy", "birthday", "to", "you"];
                   print(docname);
+                  for (String key in docname.keys) {
+                    menuItems.add(DropdownMenuItem<String>(
+                      // items[key] this instruction get the value of the respective key
+                      child: Text(docname[key]), // the value as text label
+                      value: key, // the respective key as value
+                    ));
+                  }
                   return Container(
                       padding: EdgeInsets.all(20.0),
                       //color: Colors.white,
@@ -90,14 +99,7 @@ class _ReportState extends State<Reports> {
                                           "From Doctor",
                                         ),
                                       ),
-                                      items: <String>[
-                                        docname['1'],
-                                      ].map((String value) {
-                                        return new DropdownMenuItem<String>(
-                                          value: value,
-                                          child: new Center(child: Text(value)),
-                                        );
-                                      }).toList(),
+                                      items: menuItems,
                                       onChanged: (newValue1) {
                                         setState(() {
                                           _value1 = newValue1;
