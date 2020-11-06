@@ -248,12 +248,14 @@ class Medication extends State<med> {
                                             ],
                                           ),
                                         ),
-                                        SizedBox(width: 50),
+                                        SizedBox(width: 40),
                                         SizedBox(
                                           height: 100,
                                           child: Center(
                                             child: Text(
-                                              snapshot.data["medications"]
+                                              "Remainder\n" +
+                                                  "\t\t" +
+                                                  snapshot.data["medications"]
                                                           [(a + 1).toString()]
                                                           ["tab"]["3"][0]
                                                       .toString() +
@@ -262,8 +264,6 @@ class Medication extends State<med> {
                                                           [(a + 1).toString()]
                                                           ["tab"]["3"][1]
                                                       .toString(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
                                             ),
                                           ),
                                         ),

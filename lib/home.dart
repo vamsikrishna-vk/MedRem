@@ -7,6 +7,7 @@ import 'package:medrem/ongoing.dart';
 import 'package:medrem/report.dart';
 import 'report.dart';
 import 'ongoing.dart';
+import 'schedule.dart';
 
 var currDt = DateTime.now();
 
@@ -174,7 +175,7 @@ class _HomeState1 extends State<Home2> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        Reports()),
+                                                        Schedule()),
                                               )
                                             },
                                         child: Container(
