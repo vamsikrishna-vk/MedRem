@@ -15,6 +15,7 @@ class Reports extends StatefulWidget {
 }
 
 class _ReportState extends State<Reports> {
+  int l;
   String _value, _value1;
   var docname, availablereports, availablereports1;
   var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -41,15 +42,17 @@ class _ReportState extends State<Reports> {
                   int k = snapshot.data["medications"]["0"];
                   print(k);
                   availablereports = new List(k + 1);
-                  availablereports1 = new List(k + 1);
+                  availablereports1 = new Map();
                   docname = new Map();
+
                   for (int i = 1; i <= k; i++) {
                     docname[i.toString()] =
                         snapshot.data["medications"][i.toString()]["doc name"];
                     availablereports[i] = snapshot.data["medications"]
                         [i.toString()]["reports"]["1"]["name"];
-                    availablereports1[i] = snapshot.data["medications"]
-                        [i.toString()]["reports"]["1"]["report"];
+                    availablereports1[availablereports[i]] =
+                        snapshot.data["medications"][i.toString()]["reports"]
+                            ["1"]["report"];
                   }
 
                   print(docname);
@@ -101,6 +104,8 @@ class _ReportState extends State<Reports> {
                                       ),
                                       items: <String>[
                                         docname['1'],
+                                        docname['2'],
+                                        docname['3'],
                                       ].map((String value) {
                                         return new DropdownMenuItem<String>(
                                           value: value,
@@ -136,8 +141,11 @@ class _ReportState extends State<Reports> {
                                       value: _value,
                                       hint: Center(
                                           child: Text("select a report")),
-                                      items: <String>[availablereports[1]]
-                                          .map((String value) {
+                                      items: <String>[
+                                        availablereports[1],
+                                        availablereports[2],
+                                        availablereports[3]
+                                      ].map((String value) {
                                         return new DropdownMenuItem<String>(
                                           value: value,
                                           child: new Center(child: Text(value)),
@@ -157,7 +165,7 @@ class _ReportState extends State<Reports> {
                             textColor: Colors.white,
                             color: Color(0xFF6200EE),
                             onPressed: () {
-                              launch(availablereports1[1]);
+                              launch(availablereports1[_value]);
                               //_launchURL();
                             },
                             child: Text('Download'),

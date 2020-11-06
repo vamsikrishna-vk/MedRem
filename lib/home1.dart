@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'home.dart';
 import 'emergency.dart';
+import 'profile.dart';
 
 var currDt = DateTime.now();
 
@@ -27,7 +28,7 @@ class _HomeState extends State<Home1> {
   final List<Widget> _children = [
     Home(),
     Emergency(),
-    //Profile(),
+    Profile(),
   ];
   Widget build(BuildContext context1) {
     return MaterialApp(

@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:medrem/ongoing.dart';
 import 'package:medrem/report.dart';
 import 'report.dart';
+import 'ongoing.dart';
 
 var currDt = DateTime.now();
 
@@ -68,9 +70,7 @@ class _HomeState1 extends State<Home2> {
                           SizedBox(height: 10.0),
                           Text(
                             "HI " +
-                                //snapshot.data["name1"]
-                                // .toString()
-                                //.toUpperCase() +
+                                snapshot.data["name"].toString().toUpperCase() +
                                 "!",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -109,7 +109,14 @@ class _HomeState1 extends State<Home2> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     InkWell(
-                                        onTap: () => {},
+                                        onTap: () => {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ongoing()),
+                                              )
+                                            },
                                         child: Container(
                                           child: Column(children: <Widget>[
                                             Image.asset(
@@ -224,52 +231,64 @@ class _HomeState1 extends State<Home2> {
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Container(
-                                      child: Column(children: <Widget>[
-                                        Image.asset(
-                                          "images/report.png",
-                                          height: 80.0,
-                                          width: 80.0,
-                                        ),
-                                        SizedBox(height: 10.0),
-                                        Text('Download Reports'.toUpperCase(),
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.0,
-                                            ))
-                                      ]),
-                                      padding: EdgeInsets.all(9.0),
-                                      //color: Colors.white,
-                                      height: 150.0,
-                                      width: 150.0,
-                                      decoration: new BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          // 10% of the width, so there are ten blinds.
-                                          colors: [
-                                            const Color(0xffCE65FC),
-                                            const Color(0xffFF6767)
-                                          ],
-                                          // red to yellow
-                                          tileMode: TileMode
-                                              .repeated, // repeats the gradient over the canvas
-                                        ),
-                                        //color: Colors.lightBlue,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(18)),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
+                                    InkWell(
+                                        onTap: () => {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Reports()),
+                                              )
+                                            },
+                                        child: Container(
+                                          child: Column(children: <Widget>[
+                                            Image.asset(
+                                              "images/report.png",
+                                              height: 80.0,
+                                              width: 80.0,
+                                            ),
+                                            SizedBox(height: 10.0),
+                                            Text(
+                                                'Download Reports'
+                                                    .toUpperCase(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                ))
+                                          ]),
+                                          padding: EdgeInsets.all(9.0),
+                                          //color: Colors.white,
+                                          height: 150.0,
+                                          width: 150.0,
+                                          decoration: new BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                              // 10% of the width, so there are ten blinds.
+                                              colors: [
+                                                const Color(0xffCE65FC),
+                                                const Color(0xffFF6767)
+                                              ],
+                                              // red to yellow
+                                              tileMode: TileMode
+                                                  .repeated, // repeats the gradient over the canvas
+                                            ),
+                                            //color: Colors.lightBlue,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(18)),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.5),
 
-                                            blurRadius: 7,
-                                            offset: Offset(0,
-                                                6), // changes position of shadow
+                                                blurRadius: 7,
+                                                offset: Offset(0,
+                                                    6), // changes position of shadow
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
+                                        )),
                                     SizedBox(width: 30.0),
                                     Container(
                                       padding: EdgeInsets.all(20.0),
