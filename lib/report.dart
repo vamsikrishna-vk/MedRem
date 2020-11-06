@@ -1,134 +1,172 @@
-import 'package:life_care_hospitals/emergency.dart';
-import 'package:life_care_hospitals/home1.dart';
-import 'profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:life_care_hospitals/signup.dart';
-import 'main.dart';
+
 import 'package:provider/provider.dart';
 import 'authentication_service.dart';
 
-class Login extends StatefulWidget {
+class Reports extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _LoginState();
+    return _ReportState();
   }
 }
 
-class _LoginState extends State<Login> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  String _status = 'no-action';
+class _ReportState extends State<Reports> {
+  String _value, _value1;
+  var docname, docname1;
+  var firebaseUser = FirebaseAuth.instance.currentUser;
+  final firestoreInstance = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color(0xFF6200EE),
-            title: Text("LIFE CARE HOSPITALS"),
-            centerTitle: true,
-          ),
-          body: Column(
-            children: [
-              Text("DOWNLOAD REPORTS"),
-              Container(
-                alignment: AlignmentDirectional(0.0, 0.0),
-                child: Container(
-                    padding: EdgeInsets.all(20.0),
-                    //color: Colors.white,
-                    height: 367,
-                    width: 356,
-                    decoration: new BoxDecoration(
-                      // Colors.white,
-                      color: new Color.fromRGBO(255, 255, 255, 0.7),
-                      borderRadius: BorderRadius.all(Radius.circular(18)),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
+      body: Container(
+        alignment: AlignmentDirectional(0.0, 0.0),
+        child: StreamBuilder(
+            stream: firestoreInstance
+                .collection("users")
+                .doc(firebaseUser.uid)
+                .snapshots(),
+            builder: (context1, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  return CircularProgressIndicator();
+                case ConnectionState.waiting:
+                  return CircularProgressIndicator();
+                default:
+                  int k = snapshot.data["medications"]["0"];
+                  print(k);
+                  docname = new List(k + 1);
+                  for (int i = 1; i <= k; i++) {
+                    docname[i] =
+                        snapshot.data["medications"][i.toString()]["doc name"];
+                  }
+                  docname1 = ["happy", "birthday", "to", "you"];
+                  print(docname);
+                  return Container(
+                      padding: EdgeInsets.all(20.0),
+                      //color: Colors.white,
+                      height: 327,
+                      width: 356,
+                      decoration: new BoxDecoration(
+                        // Colors.white,
+                        color: new Color.fromRGBO(255, 255, 255, 0.7),
+                        borderRadius: BorderRadius.all(Radius.circular(18)),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: 22.0),
+                          Text(
+                            "Dowonload Reports",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19.0,
+                            ),
+                          ),
+                          SizedBox(height: 22.0),
 
-                            height: 22.0,
+                          Container(
+                              height: 50.0,
+                              decoration: BoxDecoration(
+                                color: new Color.fromRGBO(0, 0, 0, 240.0),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(7)),
+                              ),
+                              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                              child: SizedBox(
+                                  child: Row(
+                                children: [
+                                  Icon(Icons.person),
+                                  Container(
+                                    height: 50.0,
+                                    width: 270,
+                                    child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      value: _value1,
+                                      hint: Center(
+                                        child: Text(
+                                          "From Doctor",
+                                        ),
+                                      ),
+                                      items: <String>[docname[1]]
+                                          .map((String value) {
+                                        return new DropdownMenuItem<String>(
+                                          value: value,
+                                          child: new Center(child: Text(value)),
+                                        );
+                                      }).toList(),
+                                      onChanged: (newValue1) {
+                                        setState(() {
+                                          _value1 = newValue1;
+                                        });
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ))),
+                          SizedBox(height: 22.0),
+                          Container(
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              color: new Color.fromRGBO(0, 0, 0, 240.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(7)),
+                            ),
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                             child: Row(
                               children: [
-                                Icon(Icons.person),
-                                DropdownButton<String>(
-                                  items: <String>['masi', 'vamshi', 'serji', 'jayanth'].map((String value) {
-                                    return new DropdownMenuItem<String>(
-                                      value: value,
-                                      child: new Text(value),
-                                    );
-                                  }).toList(),
-                                  onChanged: (_) {},
-                                ),
+                                Icon(Icons.library_books),
+                                SizedBox(
+                                    height: 50.0,
+                                    width: 270,
+                                    child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      value: _value,
+                                      hint: Center(
+                                          child: Text("select a report")),
+                                      items: <String>[
+                                        'report 1',
+                                        'report 2',
+                                        'report 3',
+                                        'report4'
+                                      ].map((String value) {
+                                        return new DropdownMenuItem<String>(
+                                          value: value,
+                                          child: new Center(child: Text(value)),
+                                        );
+                                      }).toList(),
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          _value = newValue;
+                                        });
+                                      },
+                                    )),
                               ],
-                            )
-//                            TextFormField(
-//                                controller: emailController,
-//                                decoration: InputDecoration(
-//                                  border: const OutlineInputBorder(
-//                                    borderSide: BorderSide.none,
-//                                  ),
-//                                  hintText: 'DOCTOR NAME',
-//                                  filled: true,
-//                                  fillColor: new Color.fromRGBO(0, 0, 0, 240.0),
-//                                  contentPadding: const EdgeInsets.only(
-//                                      left: 14.0, bottom: 8.0, top: 8.0),
-//                                ))
-                        ),
-
-
-                        SizedBox(height: 21.0),
-                        SizedBox(
-                          height: 50.0,
-                          child: Row(
-                            children:  [
-                              Icon(Icons.library_books),
-                          DropdownButton<String>(
-                            items: <String>['report 1', 'report 2', 'report 3', 'report4'].map((String value) {
-                              return new DropdownMenuItem<String>(
-                                value: value,
-                                child: new Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (_) {},
+                            ),
                           ),
-                          ],
-                          ),
-                        ),
 
-                        SizedBox(height: 22.0),
-                        RaisedButton(
-                          textColor: Colors.white,
-                          color: Color(0xFF6200EE),
-                          onPressed: () {
-                            context.read<AuthenticationService>().signIn(
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim(),
-                            );
-                          },
-                          child: Text('SCHEDULE'),
-                        ),
-                        SizedBox(height: 22.0),
-                        Text('see scheduled appointments'),
-                        new GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => signup()),
-                            );
-                          },
-                          child:
-                        )
-                      ],
-                    )),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("images/b2.jpg"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ],
+                          SizedBox(height: 22.0),
+                          RaisedButton(
+                            textColor: Colors.white,
+                            color: Color(0xFF6200EE),
+                            onPressed: () {},
+                            child: Text('Download'),
+                          ),
+                          SizedBox(height: 22.0),
+                          //Text('New User? Signup'),
+                        ],
+                      ));
+              }
+            }),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/b2.jpg"),
+            fit: BoxFit.cover,
           ),
-        ));
+        ),
+      ),
+    ));
   }
 }
