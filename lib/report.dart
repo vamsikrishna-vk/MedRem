@@ -45,7 +45,7 @@ class _ReportState extends State<Reports> {
                   availablereports1 = new Map();
                   docname = new Map();
 
-                  for (int i = 1; i <= k; i++) {
+                  for (int i = 1; i <= 3; i++) {
                     docname[i.toString()] =
                         snapshot.data["medications"][i.toString()]["doc name"];
                     availablereports[i] = snapshot.data["medications"]

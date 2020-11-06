@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'medication.dart';
+import 'medication.dart';
 
 class ongoing extends StatefulWidget {
   @override
@@ -80,10 +80,10 @@ class _ONGOING extends State<ongoing> {
       itemBuilder: (_, index) {
         return InkWell(
             onTap: () => {
-                  //Navigator.push(
-                  //context,
-                  //MaterialPageRoute(builder: (context) => med(index)),
-                  //)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => med(index)),
+                  )
                 },
             child: Container(
                 child: Text(
