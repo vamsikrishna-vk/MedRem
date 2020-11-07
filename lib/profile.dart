@@ -109,17 +109,6 @@ class _ProfileState extends State<Profile> {
                         SizedBox(
                           height: 25,
                         ),
-                        Container(
-                            child: Text(
-                          "see scheduled appointments".toUpperCase(),
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            color: Colors.deepPurple,
-                          ),
-                        )),
                         SizedBox(
                           height: 25,
                         ),

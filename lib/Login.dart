@@ -77,7 +77,6 @@ class _LoginState extends State<Login> {
                             left: 14.0, bottom: 8.0, top: 8.0),
                       )),
                 ),
-
                 SizedBox(height: 22.0),
                 RaisedButton(
                   textColor: Colors.white,
@@ -90,17 +89,6 @@ class _LoginState extends State<Login> {
                   },
                   child: Text('Login'),
                 ),
-                SizedBox(height: 22.0),
-                //Text('New User? Signup'),
-                new GestureDetector(
-                  onTap: () {},
-                  child: new Text(
-                    "New User? Signup",
-                    style: TextStyle(
-                      color: Color(0xFF6200EE),
-                    ),
-                  ),
-                )
               ],
             )),
         decoration: BoxDecoration(

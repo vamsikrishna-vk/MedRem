@@ -269,7 +269,7 @@ class Medication extends State<med> {
                                               isSwitched = value;
                                               if (isSwitched == true) {
                                                 scheduleNotification(
-                                                    hr , m , med, tab);
+                                                    hr, m, med, tab);
                                               } else {
                                                 cancelNotification();
                                               }
