@@ -39,6 +39,7 @@ class Medication extends State<med> {
   }
 
   int hr, m;
+  String med, tab;
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -71,13 +72,16 @@ class Medication extends State<med> {
                                   [(a + 1).toString()]["tab"]["3"][0];
                               m = snapshot.data["medications"]
                                   [(a + 1).toString()]["tab"]["3"][1];
+                              med = snapshot.data["medications"]
+                                  [(a + 1).toString()]["name"];
+                              tab = snapshot.data["medications"]
+                                  [(a + 1).toString()]["tab"]["1"];
 
                               return Container(
                                   child: Column(children: <Widget>[
                                 SizedBox(height: 30),
                                 Text(
-                                  snapshot.data["medications"]
-                                      [(a + 1).toString()]["name"],
+                                  med,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 30,
@@ -228,10 +232,7 @@ class Medication extends State<med> {
                                           child: Column(
                                             children: [
                                               Text(
-                                                snapshot.data["medications"]
-                                                        [(a + 1).toString()]
-                                                        ["tab"]["1"]
-                                                    .toUpperCase(),
+                                                tab.toUpperCase(),
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 18),
@@ -255,15 +256,9 @@ class Medication extends State<med> {
                                             child: Text(
                                               "Remainder\n" +
                                                   "\t\t" +
-                                                  snapshot.data["medications"]
-                                                          [(a + 1).toString()]
-                                                          ["tab"]["3"][0]
-                                                      .toString() +
+                                                  hr.toString() +
                                                   " : " +
-                                                  snapshot.data["medications"]
-                                                          [(a + 1).toString()]
-                                                          ["tab"]["3"][1]
-                                                      .toString(),
+                                                  m.toString(),
                                             ),
                                           ),
                                         ),
@@ -273,7 +268,8 @@ class Medication extends State<med> {
                                             setState(() {
                                               isSwitched = value;
                                               if (isSwitched == true) {
-                                                scheduleNotification(hr, m);
+                                                scheduleNotification(
+                                                    hr - 2, m - 2, med, tab);
                                               } else {
                                                 cancelNotification();
                                               }
@@ -305,9 +301,10 @@ class Medication extends State<med> {
     await flutterLocalNotificationsPlugin.cancel(0);
   }
 
-  Future<void> scheduleNotification(int hr, int m) async {
-    var scheduledNotificationDateTime =
-        DateTime.now().add(Duration(seconds: 3));
+  Future<void> scheduleNotification(
+      int hr, int m, String med, String tab) async {
+    //var scheduledNotificationDateTime =
+    //DateTime.now().add(Duration(seconds: 3));
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'channel id',
@@ -321,10 +318,11 @@ class Medication extends State<med> {
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    print(m);
     await flutterLocalNotificationsPlugin.showDailyAtTime(
         0,
-        'Time for Corona Medication',
-        'paracetemol 500mg',
+        'Time for ' + med + ' Medication',
+        tab,
         //scheduledNotificationDateTime as Time,
         Time(hr, m, 00),
         platformChannelSpecifics);
