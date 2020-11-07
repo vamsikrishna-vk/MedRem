@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'authentication_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Schedule extends StatefulWidget {
   @override
@@ -207,12 +208,15 @@ class _ScheduleState extends State<Schedule> {
                                   .collection("users")
                                   .doc(firebaseUser.uid)
                                   .update({
-                                "scheduled appointmnets": {
+                                "scheduled appointments": {
                                   "doc name": _value1.toString(),
                                   "date": selectedDate.toString(),
                                   "time": time.toString(),
                                 }
                               });
+                              Fluttertoast.showToast(
+                                msg: "Appointment Scheduled",
+                              );
                             },
                             child: Text('Schedule'),
                           ),
