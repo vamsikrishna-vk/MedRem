@@ -269,7 +269,7 @@ class Medication extends State<med> {
                                               isSwitched = value;
                                               if (isSwitched == true) {
                                                 scheduleNotification(
-                                                    hr - 2, m - 2, med, tab);
+                                                    hr , m , med, tab);
                                               } else {
                                                 cancelNotification();
                                               }
@@ -285,7 +285,6 @@ class Medication extends State<med> {
                           }
                         })))));
   }
-
 
   Future<void> cancelNotification() async {
     await flutterLocalNotificationsPlugin.cancel(0);
